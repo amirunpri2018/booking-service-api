@@ -27,6 +27,15 @@ if($jenis_kendaraan == "Mobil Kecil" && $jenis_cuci == "Cuci Biasa"){
     $harga = "0";
 }
 
+$selectAntrian = "SELECT * FROM booking WHERE booking_jadwal = '{$jadwal}'";
+$getJumlahAntrian = $conn->query($selectAntrian);
+
+while($rowAntrian = $getJumlahAntrian->fetch_assoc()){
+    $antrians[] = $rowAntrian;
+}
+
+$total_antrian = count($antrians) + 1;
+
 $sql = "INSERT INTO booking VALUES(null, '{$jadwal}', '{$jenis_kendaraan}', '{$jenis_cuci}', '{$no_plat}', '{$user_id}', '{$harga}', 'Antrian', '{$created_at}', null)";
 
 $result = $conn->query($sql);
@@ -36,7 +45,9 @@ if($result){
     echo json_encode(array(
         'status'    => 200,
         'message'   => "Berhasil booking cuci kendaraan. Mohon datang sesuai jadwal.",
-        'harga'     => $harga 
+        'harga'     => $harga,
+        'jadwal'    => $jadwal,
+        'antrian'   => $total_antrian
     ));
 
 } else {
