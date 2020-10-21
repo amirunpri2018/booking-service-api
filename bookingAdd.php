@@ -31,35 +31,58 @@ if($jenis_kendaraan == "Mobil Kecil" && $jenis_cuci == "Cuci Biasa"){
     $harga = "0";
 }
 
-$selectAntrian = "SELECT * FROM booking WHERE booking_jadwal = '{$jadwal}'";
-$getJumlahAntrian = $conn->query($selectAntrian);
+$selectMyAntrian = "SELECT * FROM booking WHERE booking_jadwal = '{$jadwal}' AND user_id = '{$user_id}'";
+$getJumlahMyAntrian = $conn->query($selectAntrian);
 
-while($rowAntrian = $getJumlahAntrian->fetch_assoc()){
-    $antrians[] = $rowAntrian;
+while($rowMyAntrian = $getJumlahMyAntrian->fetch_assoc()){
+    $amyAntrians[] = $rowMyAntrian;
 }
 
-$total_antrian = count($antrians) + 1;
+$my_total_antrian = count($amyAntrians);
 
-$sql = "INSERT INTO booking VALUES(null, '{$jadwal}', '{$jenis_kendaraan}', '{$jenis_cuci}', '{$no_plat}', '{$user_id}', '{$harga}', 'Antrian', '{$created_at}', null)";
-
-$result = $conn->query($sql);
-
-if($result){
+if($my_total_antrian > 1){
 
     echo json_encode(array(
-        'status'    => 200,
-        'message'   => "Berhasil booking cuci kendaraan. Mohon datang sesuai jadwal.",
-        'harga'     => $harga,
-        'jadwal'    => $jadwal,
-        'antrian'   => $total_antrian
+        'status'    => 403,
+        'message'   => "Anda sudah melakukan booking sebelumnya.",
+        'harga'     => "", 
+        'antrian'   => "", 
     ));
 
 } else {
-    echo json_encode(array(
-        'status'    => 500,
-        'message'   => "Gagal booking cuci kendaraan. Silahkan coba lagi pada kesempatan berikutnya.",
-        'harga'     => $harga 
-    ));
+
+    $selectAntrian = "SELECT * FROM booking WHERE booking_jadwal = '{$jadwal}'";
+    $getJumlahAntrian = $conn->query($selectAntrian);
+
+    while($rowAntrian = $getJumlahAntrian->fetch_assoc()){
+        $antrians[] = $rowAntrian;
+    }
+
+    $total_antrian = count($antrians) + 1;
+
+    $sql = "INSERT INTO booking VALUES(null, '{$jadwal}', '{$jenis_kendaraan}', '{$jenis_cuci}', '{$no_plat}', '{$user_id}', '{$harga}', 'Antrian', '{$created_at}', null)";
+
+    $result = $conn->query($sql);
+
+    if($result){
+
+        echo json_encode(array(
+            'status'    => 200,
+            'message'   => "Berhasil booking cuci kendaraan. Mohon datang sesuai jadwal.",
+            'harga'     => $harga,
+            'jadwal'    => $jadwal,
+            'antrian'   => $total_antrian
+        ));
+
+    } else {
+        echo json_encode(array(
+            'status'    => 403,
+            'message'   => "Gagal booking cuci kendaraan. Silahkan coba lagi pada kesempatan berikutnya.",
+            'harga'     => "",
+            'antrian'   => "",
+        ));
+    }
+
 }
 
 ?>
