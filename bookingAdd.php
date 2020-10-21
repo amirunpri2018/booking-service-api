@@ -32,7 +32,7 @@ if($jenis_kendaraan == "Mobil Kecil" && $jenis_cuci == "Cuci Biasa"){
 }
 
 $selectMyAntrian = "SELECT * FROM booking WHERE booking_jadwal = '{$jadwal}' AND user_id = '{$user_id}'";
-$getJumlahMyAntrian = $conn->query($selectAntrian);
+$getJumlahMyAntrian = $conn->query($selectMyAntrian);
 
 while($rowMyAntrian = $getJumlahMyAntrian->fetch_assoc()){
     $amyAntrians[] = $rowMyAntrian;
@@ -40,7 +40,7 @@ while($rowMyAntrian = $getJumlahMyAntrian->fetch_assoc()){
 
 $my_total_antrian = count($amyAntrians);
 
-if($my_total_antrian > 1){
+if($my_total_antrian >= 1){
 
     echo json_encode(array(
         'status'    => 403,
