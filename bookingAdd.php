@@ -23,6 +23,10 @@ if($jenis_kendaraan == "Mobil Kecil" && $jenis_cuci == "Cuci Biasa"){
     $harga = "30000";
 } else if($jenis_kendaraan == "Mobil Besar" && $jenis_cuci == "Cuci Hidrolik"){
     $harga = "45000";
+} else if($jenis_kendaraan == "Mobil Offroad" && $jenis_cuci == "Cuci Biasa"){
+    $harga = "35000";
+} else if($jenis_kendaraan == "Mobil Offroad" && $jenis_cuci == "Cuci Hidrolik"){
+    $harga = "50000";
 } else {
     $harga = "0";
 }
