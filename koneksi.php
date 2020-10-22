@@ -3,6 +3,7 @@
     $password       = ""; // kosong
     $hostname       = "localhost"; // server local
     $dbname         = "db_booking"; // nama database yang kita mau hubungkan
+	// test aja
     // create connection
     $conn = new mysqli($hostname, $username, $password, $dbname);
     // check connection
