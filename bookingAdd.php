@@ -47,6 +47,7 @@ if($my_total_antrian >= 1){
         'message'   => "Anda sudah melakukan booking sebelumnya.",
         'harga'     => "", 
         'antrian'   => "", 
+        'jenis_kendaraan'   => "", 
     ));
 
 } else {
@@ -71,7 +72,8 @@ if($my_total_antrian >= 1){
             'message'   => "Berhasil booking cuci kendaraan. Mohon datang sesuai jadwal.",
             'harga'     => $harga,
             'jadwal'    => $jadwal,
-            'antrian'   => $total_antrian
+            'antrian'   => $total_antrian,
+            'jenis_kendaraan'   => $jenis_kendaraan
         ));
 
     } else {
@@ -80,6 +82,7 @@ if($my_total_antrian >= 1){
             'message'   => "Gagal booking cuci kendaraan. Silahkan coba lagi pada kesempatan berikutnya.",
             'harga'     => "",
             'antrian'   => "",
+            'jenis_kendaraan'   => $jenis_kendaraan
         ));
     }
 
